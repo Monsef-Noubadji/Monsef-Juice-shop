@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/header'); -%>
+  <body>
+    <div class="wrapper">
+      <div class="message" id="message"></div>
+      <h2 class="signup">Create a new Account</h2>
+      <form action="/signup" class="form" id="form">
+        <label for="Username">Username</label>
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter Username"
+          required
+        />
+        <div class="username error"></div>
+        <label for="Email">Email Address</label>
+        <input type="email" name="email" placeholder="Enter Email" required />
+        <div class="email error"></div>
+        <label for="Password">Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          required
+        />
+        <div class="password error"></div>
+        <button class="Signup">Sign Up</button>
+      </form>
+      <%- include('partials/footer'); -%>
+    </div>
+  </body>
+</html>
+
+<script>
+  const Local = "message";
+  const form = document.getElementById("form");
+  const usrError = document.querySelector(".username.error");
+  const emailError = document.querySelector(".email.error");
+  const pwdError = document.querySelector(".password.error");
+  const message = document.getElementById(Local);
+
+  // sign up error handler
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    usrError.textContent = "";
+    emailError.textContent = "";
+    pwdError.textContent = "";
+    message.textContent = "";
+    message.style.backgroundColor = "transparent";
+
+    const username = form.username.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    try {
+      const res = await fetch("/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (data.signupErr) {
+        usrError.textContent = data.signupErr.username;
+        emailError.textContent = data.signupErr.email;
+        pwdError.textContent = data.signupErr.password;
+        message.textContent = "Registration failed";
+        message.style.backgroundColor = "Red";
+      }
+      if (data.user) {
+        //make a div to show success message
+        message.style.backgroundColor = "#23CE6B";
+        message.textContent = "Successfully Registered ! Redirecting ..";
+        location.assign("/login");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>

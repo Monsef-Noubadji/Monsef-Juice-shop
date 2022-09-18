@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/header'); -%>
+  <body>
+    <div class="wrapper">
+      <div class="message" id="message"></div>
+      <h2 class="signup">Login to your Account</h2>
+      <form action="/login" class="form" id="form">
+        <label for="Email">Email Address</label>
+        <input type="email" name="email" placeholder="Enter Email" required />
+        <div class="email error"></div>
+        <label for="Password">Password</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          required
+        />
+        <div class="password error"></div>
+        <button class="Signup">Login</button>
+      </form>
+      <%- include('partials/footer'); -%>
+    </div>
+  </body>
+</html>
+<script>
+  const newLocal = "form";
+  const Local = "message";
+  const form = document.getElementById(newLocal);
+  const emailError = document.querySelector(".email.error");
+  const pwdError = document.querySelector(".password.error");
+  const message = document.getElementById(Local);
+
+  // login error handler
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    //reset errors on submit
+    emailError.textContent = "";
+    pwdError.textContent = "";
+    message.textContent = "";
+    message.style.backgroundColor = "transparent";
+
+    //get values
+    const email = form.email.value;
+    const password = form.password.value;
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (data.errors) {
+        emailError.textContent = data.errors.email;
+        pwdError.textContent = data.errors.password;
+        message.textContent = "Login failed";
+        message.style.backgroundColor = "Red";
+      }
+      if (data.user) {
+        // show success message
+        message.style.backgroundColor = "#23CE6B";
+        message.textContent = "Successfully Logged in ! Redirecting ..";
+        location.assign("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>

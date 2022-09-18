@@ -1,0 +1,27 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-eval' http://www.google.com">  -->
+       <title>Mono | <%= title %></title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <!-- https://i.pinimg.com/originals/4b/14/d0/4b14d07526a8adaeeaa669ebca66acda.png -->
+    <link rel="icon" href=" https://static.thenounproject.com/png/98945-200.png" type="image/png">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h3><a href="/">Monsef Juice Shop</a></h3>
+        <ul class="auth">
+          <% if(user) { %>
+        <li class="welcomeMsg">Welcome, <%= user.username%></li>
+          <li><a href="/logout">Logout</a></li>
+            <% } else {  %>
+          <li><a href="/login">Login</a></li>
+          <li class="link"><a href="/signup">Register</a></li>
+          <% }%>
+        </div>
+      </nav>
+    </header>
+  </body>
+</html>
