@@ -1,0 +1,13 @@
+version: '2.10.2'
+services:
+  auth:
+    build: ./auth
+    image: monos21/authentication-system
+    env_file:
+      - ./auth/.env
+    container_name: AuthSystem-v4
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./auth:/app
+      - /app/node_modules
