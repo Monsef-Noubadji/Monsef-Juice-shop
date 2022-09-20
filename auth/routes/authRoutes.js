@@ -10,5 +10,9 @@ router.get('/signup', authController.signupView);
 router.post('/signup', authController.signup);
 router.get('/smoothies', requireAuth, authController.smoothies);
 router.get('/logout', authController.logout);
+router.get('/:id', requireAuth, authController.deleteUser)
+router.post('/search/:key', requireAuth, authController.searchUser)
+router.post('/edit/:id', requireAuth, authController.editUser)
+router.get('/edit/:id', requireAuth, authController.getEditUser)
 
 module.exports = router;

@@ -1,5 +1,6 @@
 node_modules
 .env
+boilerplate.js
 .dockerignore
 docker-compose.yaml
 Dockerfile

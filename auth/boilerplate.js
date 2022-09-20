@@ -23,3 +23,9 @@
         // }
 
 // minlength: [6, 'Password length should be more than 6 characters'],
+
+//  <form action="/search/">
+//         <label for="search">Search</label>
+//         <input type="text" name="key" placeholder="Search a user">
+//         <button class="btn-search">Search</button>
+//       </form> 

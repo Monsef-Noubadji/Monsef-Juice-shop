@@ -1,19 +1,15 @@
 <html>
   <%- include('./partials/header'); -%>
-
+  <h2>Search result : <%= users.length %> results</h2>
   <ul class="recipes">
     <% if(users.length > 0) { %> <% users.forEach(user => { %>
     <li class="recipe">
       <img src="/assets/img/smoothie.png" alt="smoothie recipe icon" />
       <h4><%= user.username %></h4>
       <p><%= user.email %></p>
-      <div class="btns">
-        <a href="/<%= user._id %>" class="rm"> Delete User</a>
-        <a href="/edit/<%= user._id %>" class="edit"> Edit User</a>
-      </div>
     </li>
     <% }); %> <% } else { %>
-    <h3 class="emptyData">No Data Available</h3>
+    <h3 class="emptyData">We couldn't find a match for your search :(</h3>
     <% } %>
   </ul>
 

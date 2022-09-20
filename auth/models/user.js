@@ -23,10 +23,6 @@ const userSchema = new Schema({
         required: [true, 'Password is required'],
         validate: [isStrongPassword, 'Password must be minimum 8 characters long , contains one digit , one lowercase letter, one uppercase letter and one special character']
 
-    },
-    registeredAt: {
-        type: Date,
-        default: Date.now
     }
 }, { timestamps: true })
 

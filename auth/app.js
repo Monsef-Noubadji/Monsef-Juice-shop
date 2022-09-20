@@ -35,4 +35,8 @@ connectDB();
 app.listen(process.env.PORT, () => {
   console.log('App listening ✅ on ' + process.env.ADDRESS + process.env.PORT || 3300)
 })
+
+// to Debug node app in Chrome , use : node --inspect <YOU_ENTRY_FILE>
+
 module.exports = app;
+
