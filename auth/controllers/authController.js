@@ -1,6 +1,8 @@
 const User = require("../models/user")
+const Comment = require('../models/comment')
 const createToken = require("../services/createToken")
 const errorHandler = require('../services/errorHandler')
+const cmntController = require('./cmntController')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
 
@@ -63,9 +65,10 @@ const logout = (req, res) => {
 
 
 const smoothies = async (req, res) => {
-    await User.find({}).sort({ createdAt: -1 })
+    const comments = await Comment.find({}).sort({ createdAt: -1 }).limit(4)
+    await User.find({}).sort({ createdAt: -1 }).limit(3)
         .then(result => {
-            res.render('smoothies', { title: 'Smoothies Users', users: result })
+            res.render('smoothies', { title: 'Smoothies Users', users: result, comments: comments })
         })
 
 }
@@ -118,6 +121,8 @@ const editUser = async (req, res) => {
     const id = req.params.id
     try {
         const old = await User.findById(id);
+        // const username = Comment.findByIdAndUpdate(id, { username: req.body.username || old.username},{ new: true, runValidators: true } )
+        // username.save()
         const user = await User.findByIdAndUpdate(id, {
             username: req.body.username || old.username,
             email: req.body.email || old.email,
