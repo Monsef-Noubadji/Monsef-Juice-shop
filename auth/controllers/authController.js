@@ -122,15 +122,15 @@ const editUser = async (req, res) => {
             username: req.body.username || old.username,
             email: req.body.email || old.email,
             password: !req.body.password ? old.password : req.body.password
-        })
+        }, { new: true, runValidators: true })
         user.save()
             .then(result => {
-                res.status(200).json({ user: user._id });
+                res.status(201).json({ user: user._id, "message": "edit successfully !" });
             })
     }
     catch (err) {
-        const editErr = errorHandler(err);
-        res.status(400).json({ editErr });
+        const editError = errorHandler(err);
+        res.status(400).json({ editError });
     }
 }
 

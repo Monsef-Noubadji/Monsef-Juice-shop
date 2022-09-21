@@ -8,10 +8,13 @@
       <form action="/edit" class="form" id="form">
         <label for="Username">Username</label>
         <input type="text" name="username" placeholder="Enter new Username" />
-        <div class="username error"></div>
+        <div class="usernameedit error"></div>
         <label for="Email">Email Address</label>
         <input type="email" name="email" placeholder="Enter new Email" />
-        <div class="email error"></div>
+        <div class="emailedit error"></div>
+        <label for="Password">Password</label>
+        <input type="password" name="password" placeholder="Enter Password" />
+        <div class="passwordedit error"></div>
         <button class="edit">Update informations</button>
       </form>
       <%- include('partials/footer'); -%>
@@ -22,8 +25,9 @@
   const newLocal = "form";
   const Local = "message";
   const form = document.getElementById(newLocal);
-  const usrError = document.querySelector(".username.error");
-  const emailError = document.querySelector(".email.error");
+  const usrError = document.querySelector(".usernameedit.error");
+  const emailError = document.querySelector(".emailedit.error");
+  const pwdError = document.querySelector(".passwordedit.error");
   const message = document.getElementById(Local);
 
   // edit error handler
@@ -32,14 +36,16 @@
     e.preventDefault();
 
     //reset errors on submit
-    emailError.textContent = "";
     usrError.textContent = "";
+    emailError.textContent = "";
+    pwdError.textContent = "";
     message.textContent = "";
     message.style.backgroundColor = "transparent";
 
     //get values
-    const email = form.email.value;
     const username = form.username.value;
+    const email = form.email.value;
+    const password = form.password.value;
     const endpoint = window.location.href;
     try {
       const res = await fetch(endpoint, {
@@ -47,6 +53,7 @@
         body: JSON.stringify({
           username,
           email,
+          password,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -55,9 +62,10 @@
 
       const data = await res.json();
       console.log(data);
-      if (data.editErr) {
-        emailError.textContent = data.editErr.email;
-        usrError.textContent = data.editErr.username;
+      if (data.editError) {
+        usrError.textContent = data.editError.username;
+        emailError.textContent = data.editError.email;
+        pwdError.textContent = data.editError.password;
         message.textContent = "Edit failed";
         message.style.backgroundColor = "Red";
       }

@@ -1,6 +1,7 @@
 <html>
   <%- include('./partials/header'); -%>
 
+  <h3>Users : <%= users.length %> user</h3>
   <ul class="recipes">
     <% if(users.length > 0) { %> <% users.forEach(user => { %>
     <li class="recipe">
@@ -16,6 +17,6 @@
     <h3 class="emptyData">No Data Available</h3>
     <% } %>
   </ul>
-
+  <!-- // TODOS TODAY : Front-end Search functionality + Cloud engineering -->
   <%- include('partials/footer'); -%>
 </html>
